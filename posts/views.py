@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
 
@@ -6,7 +7,7 @@ from .models import Post
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
-    return HttpResponse("<h1>Hello World</h1>")
+    return render(request, "pages/home.html", context={}, status=200)
 
 def post_detail_view(request, post_id, *args, **kwargs):
     """
