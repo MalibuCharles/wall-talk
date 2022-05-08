@@ -9,6 +9,19 @@ from .models import Post
 def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
 
+def post_list_view(request, *args, **kwargs):
+    """
+    REST API VIEW 
+    Consume By JS
+    return json data
+    """
+    qs = Post.objects.all()
+    posts_list = [{"id": x.id, "content": x.content} for x in qs]
+    data = {
+      "response": posts_list
+    }
+    return JsonResponse(data)
+
 def post_detail_view(request, post_id, *args, **kwargs):
     """
     REST API VIEW 
