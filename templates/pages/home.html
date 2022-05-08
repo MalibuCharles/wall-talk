@@ -1,9 +1,24 @@
-% extends 'base.html' %
-
+{% extends 'base.html' %}
+}
 {% block content %}
-Welcome to Walk Talk 
+Welcome to Wall Talk 
+
+<div id="posts">
+    Replace me ...
+</div>
 
 <script>
+const postsElement = document.getElementById("posts")
+postsElement.innerHTML = 'Loading ...'
+
+var el1 = "<h1> Hi Thing 1</h1>"
+
+var el2 = "<h1> Hi Thing 2</h1>"
+
+var el3 = "<h1> Hi Thing 3</h1>"
+postsElement.innerHTML = el1 + el2 + el3
+
+
 const xhr = new XMLHttpRequest()
 const method = 'GET'
 const url = "/posts"
