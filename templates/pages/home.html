@@ -10,7 +10,7 @@
 
 <div class="row mb-3">
     <div class="col-md-4 mx-auto col-10">
-        <form class="form" method="POST" action="/create-post">
+        <form class="form" id="post-create-form" method="POST" action="/create-post">
                 {% csrf_token %}
             <input type="hidden" value="/" name="next"/>
             <textarea class="form-control" name="content" placeholder="Write on the wall..." ></textarea>
@@ -24,13 +24,41 @@
 </div>
 
 <script>
-const postsElement = document.getElementById("posts")
+function handlePostCreateFormDidSubmit(event){
+    event.preventDefault()
+    console.log(event)
+}
+const postCreateFormEl = document.getElementById("post-create-form")
 
+postCreateFormEl.addEventListener("submit", handlePostCreateFormDidSubmit)
 
+const postsEl = document.getElementById("posts")
+
+function loadPosts(postsElement){
 const xhr = new XMLHttpRequest()
 const method = 'GET'
 const url = "/posts"
+
 const responseType = "json"
+xhr. responseType = responseType
+xhr.open(method,url)
+xhr.onload = function(){
+    const serverResponse = xhr.response
+    const listedItems = serverResponse.response
+    let finalPostStr = ""
+    let i;
+    for (i=0;i<listedItems.length; i++){
+        let postObj = listedItems[i]
+        let currentItem = formattedPostElement(postObj)
+        finalPostStr += currentItem
+    }
+    postsElement.innerHTML = finalPostStr
+}
+xhr.send()
+}
+
+loadPosts(postsEl)
+
 
 function handleDidLike (post_id, currentCount){
     console.log(post_id, currentCount)
@@ -50,22 +78,6 @@ let formattedPost = "<div class='col-12 col-md-10 mx-auto border rounded py-3 mb
     "</div></div>"
     return formattedPost
 }
-
-xhr. responseType = responseType
-xhr.open(method,url)
-xhr.onload = function(){
-    const serverResponse = xhr.response
-    const listedItems = serverResponse.response
-    let finalPostStr = ""
-    let i;
-    for (i=0;i<listedItems.length; i++){
-        let postObj = listedItems[i]
-        let currentItem = formattedPostElement(postObj)
-        finalPostStr += currentItem
-    }
-    postsElement.innerHTML = finalPostStr
-}
-xhr.send()
 
 
 </script>
