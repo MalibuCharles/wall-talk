@@ -1,3 +1,4 @@
+import random
 from multiprocessing import context
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
@@ -16,7 +17,7 @@ def post_list_view(request, *args, **kwargs):
     return json data
     """
     qs = Post.objects.all()
-    posts_list = [{"id": x.id, "content": x.content} for x in qs]
+    posts_list = [{"id": x.id, "content": x.content, "likes": random.randint(0,150)} for x in qs]
     data = {
       "isUser": False,
       "response": posts_list
