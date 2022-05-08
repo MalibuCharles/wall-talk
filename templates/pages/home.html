@@ -16,6 +16,12 @@ const method = 'GET'
 const url = "/posts"
 const responseType = "json"
 
+function formattedPostElement(post){
+
+let formattedPost = "<div class='mb-4 post' id='post -" + post.id +  "<p>" + post.content + "</p></div>"
+    return formattedPost
+}
+
 xhr. responseType = responseType
 xhr.open(method,url)
 xhr.onload = function(){
@@ -24,10 +30,9 @@ xhr.onload = function(){
     let finalPostStr = ""
     let i;
     for (i=0;i<listedItems.length; i++){
-        console.log(i)
-        console.log(listedItems[i])
-        let currentItem = "<div class='mb-4'><h1>" + listedItems[i].id + "</h1>" + "<p>" + listedItems[i].content + "</p></div>"
-            finalPostStr += currentItem
+        let postObj = listedItems[i]
+        let currentItem = formattedPostElement(postObj)
+        finalPostStr += currentItem
     }
     postsElement.innerHTML = finalPostStr
 }
