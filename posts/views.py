@@ -3,12 +3,20 @@ from multiprocessing import context
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
 
-
+from .forms import PostForm
 from .models import Post
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
     return render(request, "pages/home.html", context={}, status=200)
+
+def post_create_view(request, *args, **kwargs):
+    form = PostForm(request.POST or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        form = PostForm()
+    return render(request, 'components/form.html', context={"form":form})
 
 def post_list_view(request, *args, **kwargs):
     """
