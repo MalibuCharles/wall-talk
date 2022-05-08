@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 }
 {% block content %}
-Welcome to Wall Talk 
 
-<div id="posts">
+<div class="row text-center">
+    <div class="col">
+        <h1>Welcome to Wall Talk </h1>
+    </div>
+</div>
+
+
+<div class='row' id="posts">
     Loading ...
 </div>
 
@@ -28,7 +34,7 @@ function LikeBtn(post){
 
 function formattedPostElement(post){
 
-let formattedPost = "<div class='mb-4 post' id='post -" + post.id
+let formattedPost = "<div class='col-12 col-md-10 mx-auto border rounded py-3 mb-4 post' id='post -" + post.id
  +  "'><p>" + post.content +
     "</p><div class='btn-group'>" + LikeBtn(post) +
     "</div></div>"
