@@ -4,19 +4,11 @@
 Welcome to Wall Talk 
 
 <div id="posts">
-    Replace me ...
+    Loading ...
 </div>
 
 <script>
 const postsElement = document.getElementById("posts")
-postsElement.innerHTML = 'Loading ...'
-
-var el1 = "<h1> Hi Thing 1</h1>"
-
-var el2 = "<h1> Hi Thing 2</h1>"
-
-var el3 = "<h1> Hi Thing 3</h1>"
-postsElement.innerHTML = el1 + el2 + el3
 
 
 const xhr = new XMLHttpRequest()
@@ -28,8 +20,16 @@ xhr. responseType = responseType
 xhr.open(method,url)
 xhr.onload = function(){
     const serverResponse = xhr.response
-    var listedItems = serverResponse.response
-    console.log(listedItems)
+    const listedItems = serverResponse.response
+    let finalPostStr = ""
+    let i;
+    for (i=0;i<listedItems.length; i++){
+        console.log(i)
+        console.log(listedItems[i])
+        let currentItem = "<div class='mb-4'><h1>" + listedItems[i].id + "</h1>" + "<p>" + listedItems[i].content + "</p></div>"
+            finalPostStr += currentItem
+    }
+    postsElement.innerHTML = finalPostStr
 }
 xhr.send()
 
