@@ -1,7 +1,7 @@
 import random
 from multiprocessing import context
 from django.http import HttpResponse, Http404, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .forms import PostForm
 from .models import Post
@@ -12,10 +12,13 @@ def home_view(request, *args, **kwargs):
 
 def post_create_view(request, *args, **kwargs):
     form = PostForm(request.POST or None)
-    print('post data is', request.POST)
+    next_url = request.POST.get("next") or None
+    print("next_url", next_url)
     if form.is_valid():
         obj = form.save(commit=False)
         obj.save()
+        if next_url != None:
+            return redirect(next_url)
         form = PostForm()
     return render(request, 'components/form.html', context={"form":form})
 
